@@ -15,7 +15,7 @@ export const Addform = () => {
     const { name, value } = e.target;
     setTask({
       ...task,
-      [name]: name === "hr" ? +value : value,
+      [name]: name === "hr" ? value : value,
     });
   };
 
