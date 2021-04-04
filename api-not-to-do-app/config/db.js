@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const mongoclient = async () => {
   const connStr =
-    process.env.NODE.ENV !== "production"
+    process.env.NODE.ENV === "production"
       ? process.env.PROD_MONGO_CLIENT
       : process.env.MONGO_CLIENT;
   try {
