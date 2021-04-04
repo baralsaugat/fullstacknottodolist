@@ -1,22 +1,21 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 dotenv.config();
-
-
 
 import express from "express";
 
 const app = express();
 
-import cors from 'cors';
+import cors from "cors";
+import path from "path";
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 import router from "./router.js";
 
-import mongoclient from './config/db.js'
+import mongoclient from "./config/db.js";
 mongoclient();
 
-app.use(cors())
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
@@ -25,19 +24,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/v1", router);
+const __dirname = path.resolve();
 
-app.use("/", (req, res) => {
-	// throw new Error("test error");
-	res.send("Working");
-});
+// throw new Error("test error");
+if (process.env.NODE_ENV !== "production") {
+  app.use(express.static(path.join(__dirname, "/reactnotodolist/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/reactnotodolist/build/index.html"));
+  });
+} else {
+  res.send("welcome to my app");
+}
 
 app.use((error, req, res, next) => {
-	console.log(error);
-	// res.code(500).send(error.message);
+  console.log(error);
+  // res.code(500).send(error.message);
 });
 
-app.listen(PORT, error => {
-	error && console.log(error);
+app.listen(PORT, (error) => {
+  error && console.log(error);
 
-	console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
