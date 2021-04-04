@@ -34,7 +34,9 @@ if (process.env.NODE_ENV !== "production") {
     res.sendFile(path.join(__dirname, "/reactnotodolist/build/index.html"));
   });
 } else {
-  res.send("welcome to my app");
+  app.get("/", (req, res) => {
+    res.send("welcome to my app");
+  });
 }
 
 app.use((error, req, res, next) => {
