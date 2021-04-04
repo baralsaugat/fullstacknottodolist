@@ -27,7 +27,7 @@ app.use("/api/v1", router);
 const __dirname = path.resolve();
 
 // throw new Error("test error");
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/reactnotodolist/build")));
 
   app.get("*", (req, res) => {
