@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const rootUrl = "http://localhost:5000/api/v1";
+const rootUrl = "/api/v1";
 
 export const createTask = (frmData) => {
   return new Promise(async (resolve, reject) => {
@@ -47,7 +47,6 @@ export const switchTask = (todo) => {
     try {
       const { data } = await axios.patch(rootUrl, { data: todo });
 
-      
       resolve(data);
     } catch (error) {
       resolve({
